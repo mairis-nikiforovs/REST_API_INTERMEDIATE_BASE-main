@@ -7,6 +7,7 @@ import Ajv from 'ajv'
 
 
 // METHOD THAT EXECUTES ALL REQUESTS
+// A NEW COMMENT
 export async function request(context, method, path, body = undefined, auth = true, asserts = {statusCode : 200},  host = undefined, customHeaders = undefined) {
     // SETTING THE DOMAIN OF TESTS (EITHER DEFAULT FROM CONFIG OR CUSTOM IF PASSED IN AS ARG)
     const requestST = host ? supertest(host) : supertest(config[global.env].host)
