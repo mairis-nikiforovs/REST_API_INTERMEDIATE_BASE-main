@@ -1,0 +1,26 @@
+{
+  "name": "api-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Mairis Nikiforovs",
+  "license": "ISC",
+  "scripts": {
+    "user": "mocha 'tests/scenarios/user/crud.js' --reporter mochawesome --timeout 20000; node send-discord-notification.js",
+    "restaurant": "mocha 'tests/scenarios/restaurant/restaurant.js' --reporter mochawesome --reporter-options reportDir=reports,reportFilename=restaurant_report,reportTitle='Restaurant tests' --timeout 20000; node send-discord-notification.js reports/restaurant_report.json"
+  },
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "mocha": "^10.8.2",
+    "supertest": "^7.0.0"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "ajv": "^8.17.1",
+    "csv-parser": "^3.2.0",
+    "discord-webhook-node": "^1.1.8",
+    "get-nested-value": "^1.0.3",
+    "mochawesome": "^7.1.3"
+  },
+  "type": "module"
+}

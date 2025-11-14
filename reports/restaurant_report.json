@@ -1,0 +1,722 @@
+{
+  "stats": {
+    "suites": 8,
+    "tests": 20,
+    "passes": 1,
+    "pending": 0,
+    "failures": 19,
+    "start": "2025-11-14T15:15:18.141Z",
+    "end": "2025-11-14T15:15:21.154Z",
+    "duration": 3013,
+    "testsRegistered": 20,
+    "passPercent": 5,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "f8360a50-7c16-4c77-bd54-309f5a365cbf",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [
+        {
+          "title": "\"before all\" hook in \"{root}\"",
+          "fullTitle": "\"before all\" hook in \"{root}\"",
+          "timedOut": false,
+          "duration": 5,
+          "state": null,
+          "speed": null,
+          "pass": false,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "await generateTestData()\ncreateUser()\nlogIn()",
+          "err": {},
+          "uuid": "244bb32f-e356-4f0a-ad14-d0a5a5212d63",
+          "parentUUID": "f8360a50-7c16-4c77-bd54-309f5a365cbf",
+          "isHook": true,
+          "skipped": false
+        }
+      ],
+      "afterHooks": [
+        {
+          "title": "\"after all\" hook in \"{root}\"",
+          "fullTitle": "\"after all\" hook in \"{root}\"",
+          "timedOut": false,
+          "duration": 2,
+          "state": null,
+          "speed": null,
+          "pass": false,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "deleteUserWithNoWrapper() //lifecycle phases issue",
+          "err": {},
+          "uuid": "88119ffb-d286-4857-b7a9-dc8c0b86b151",
+          "parentUUID": "f8360a50-7c16-4c77-bd54-309f5a365cbf",
+          "isHook": true,
+          "skipped": false
+        }
+      ],
+      "tests": [
+        {
+          "title": "Restaurant tests",
+          "fullTitle": "Restaurant tests",
+          "timedOut": false,
+          "duration": 1,
+          "state": "passed",
+          "speed": "fast",
+          "pass": true,
+          "fail": false,
+          "pending": false,
+          "context": null,
+          "code": "describe(`CRUD restaurant`, () => {\n        createRestaurant()\n        updateRestaurant()\n        getRestaurant()\n        deleteRestaurant()\n        getDeletedRestaurant()\n    })\n    describe(`Negative - Deleting an already deleted restaurant`, () => {\n        createRestaurant()\n        deleteRestaurant()\n        deleteRestaurantTwice()\n    })\n    describe(`Get All Restaurants`, () => {\n        createRestaurant()\n        createRestaurant()\n        getRestaurants()\n    })\n    describe('Negative - create restaurants from json', () => {\n        for(const scenario of negativeScenarios){\n            negativeCreateRestaurant(scenario.requestBody, scenario.testCaseName, scenario.message)\n        }\n    })\n    const requestBodies = global.executionVariables.csvObjects;\n    for(const body of requestBodies){\n        describe('Create restaurant with CSV data', () => {\n            createRestaurant(body)\n        })\n    }",
+          "err": {},
+          "uuid": "48272377-5c37-46cf-9cb0-649a170a9c14",
+          "parentUUID": "f8360a50-7c16-4c77-bd54-309f5a365cbf",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "Create user account",
+          "fullTitle": "Create user account",
+          "timedOut": false,
+          "duration": 224,
+          "state": "failed",
+          "speed": null,
+          "pass": false,
+          "fail": true,
+          "pending": false,
+          "context": "[\n  \"POST /user\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"email\": \"Manuel_Reinger86@apimail.tdlbox.com\",\n      \"name\": \"Mairis\",\n      \"surname\": \"TestLastName\",\n      \"password\": \"cQfeloZk4N_bIxY\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:18 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+          "code": "const requestBody = await getCreateUserRequestBody()\nawait request(this, 'POST', '/user', requestBody, false, \n    {\n        statusCode : 201,\n        expectedValues: [\n                            {path: 'email', value: requestBody.email},\n                            {path: 'name', value: requestBody.name},\n                            {path: 'surname', value: requestBody.surname}\n                        ],\n        executionVariables: [\n                                {path: 'email', name: 'userEmail'}, \n                            ]\n    }\n)",
+          "err": {
+            "message": "AssertionError: Actual is 403, but expected was 201",
+            "estack": "AssertionError: Actual is 403, but expected was 201\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/user/user.js:8:9)",
+            "diff": "- 403\n+ 201\n"
+          },
+          "uuid": "f707cd20-02f8-4d84-8f81-e91695b9627c",
+          "parentUUID": "f8360a50-7c16-4c77-bd54-309f5a365cbf",
+          "isHook": false,
+          "skipped": false
+        },
+        {
+          "title": "The user Logs In",
+          "fullTitle": "The user Logs In",
+          "timedOut": false,
+          "duration": 151,
+          "state": "failed",
+          "speed": null,
+          "pass": false,
+          "fail": true,
+          "pending": false,
+          "context": "[\n  \"POST /login\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"password\": \"cQfeloZk4N_bIxY\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:18 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+          "code": "const requestBody = {\n    email: global.executionVariables.userEmail,\n    password: global.executionVariables.userPassword\n}\nawait request(this, 'POST', '/login', requestBody, false, \n    {\n        statusCode : 200,\n        expectedValues: [\n                            {path: 'message', value: \"Login successful\"}\n                        ],\n        expectedFields: ['token'],\n        executionVariables: [\n                                {path: 'token', name: 'userToken'}, \n                            ]\n    }\n)",
+          "err": {
+            "message": "AssertionError: Actual is 403, but expected was 200",
+            "estack": "AssertionError: Actual is 403, but expected was 200\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/user/user.js:30:9)",
+            "diff": "- 403\n+ 200\n"
+          },
+          "uuid": "36525085-274f-44d5-895b-cd1250041c8a",
+          "parentUUID": "f8360a50-7c16-4c77-bd54-309f5a365cbf",
+          "isHook": false,
+          "skipped": false
+        }
+      ],
+      "suites": [
+        {
+          "uuid": "cb417847-c1d5-4979-a2f4-8e5e3adb5629",
+          "title": "CRUD restaurant",
+          "fullFile": "/Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/scenarios/restaurant/restaurant.js",
+          "file": "/tests/scenarios/restaurant/restaurant.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create a new restaurant",
+              "fullTitle": "CRUD restaurant Create a new restaurant",
+              "timedOut": false,
+              "duration": 163,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"savory morwong 1763133319953\",\n      \"description\": \"Grilled rabbit kebabs, marinated in Bulgarian spices and served with a fresh capers and pineapple salad.\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:18 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "const requestBody = body || await getCreateRestaurantRequestBody()\n    \nawait request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 201,\n        expectedValues: [\n                            {path: 'name', value: requestBody.name},\n                            {path: 'description', value: requestBody.description}\n                        ],\n        executionVariables: [\n                            {path: '_id', name: 'restaurantId'},\n                            {path: 'name', name: 'restaurantName'},\n                            {path: 'description', name: 'restaurantDescription'},\n                            {path: 'user', name: 'userId'}\n                        ],\n        validateSchema: schemaFile\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 201",
+                "estack": "AssertionError: Actual is 403, but expected was 201\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:10:9)",
+                "diff": "- 403\n+ 201\n"
+              },
+              "uuid": "9b72fe51-c88e-42a4-8191-552a6af79729",
+              "parentUUID": "cb417847-c1d5-4979-a2f4-8e5e3adb5629",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Update a restaurant",
+              "fullTitle": "CRUD restaurant Update a restaurant",
+              "timedOut": false,
+              "duration": 137,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"PATCH /restaurants/undefined\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"savory morwong 1763133319953\",\n      \"description\": \"Grilled rabbit kebabs, marinated in Bulgarian spices and served with a fresh capers and pineapple salad.\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:18 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "const requestBody = await getCreateRestaurantRequestBody()\nawait request(this, 'PATCH', `/restaurants/${global.executionVariables.restaurantId}`, requestBody, true, \n    {\n        statusCode : 200,\n        expectedFields: ['meals', 'created'],\n        expectedValues: [\n                            {path: 'name', value: requestBody.name},\n                            {path: 'description', value: requestBody.description},\n                            {path: '_id', value: global.executionVariables.restaurantId},\n                            {path: 'user', value: global.executionVariables.userId}\n                        ],\n        executionVariables: [\n                            {path: 'name', name: 'restaurantName'},\n                            {path: 'description', name: 'restaurantDescription'}\n                        ]\n}\n)",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 200",
+                "estack": "AssertionError: Actual is 403, but expected was 200\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:48:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:43:9)",
+                "diff": "- 403\n+ 200\n"
+              },
+              "uuid": "e5db01bf-633a-436e-b309-9dadeb53fda7",
+              "parentUUID": "cb417847-c1d5-4979-a2f4-8e5e3adb5629",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Get a restaurant",
+              "fullTitle": "CRUD restaurant Get a restaurant",
+              "timedOut": false,
+              "duration": 165,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"GET /restaurants/undefined\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:19 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "await request(this, 'GET', `/restaurants/${global.executionVariables.restaurantId}`, undefined, true, \n    {\n        statusCode : 200,\n        expectedValues: [\n                            {path: 'name', value: global.executionVariables.restaurantName},\n                            {path: 'description', value: global.executionVariables.restaurantDescription},\n                            {path: '_id', value: global.executionVariables.restaurantId},\n                            {path: 'user', value: global.executionVariables.userId} \n                        ]\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 200",
+                "estack": "AssertionError: Actual is 403, but expected was 200\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:32:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:64:9)",
+                "diff": "- 403\n+ 200\n"
+              },
+              "uuid": "1fe6b752-b387-48c5-94b4-97c2f9f7aaa9",
+              "parentUUID": "cb417847-c1d5-4979-a2f4-8e5e3adb5629",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Delete a restaurant",
+              "fullTitle": "CRUD restaurant Delete a restaurant",
+              "timedOut": false,
+              "duration": 136,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"DELETE /restaurants/undefined\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:19 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "await request(this, 'DELETE', `/restaurants/${global.executionVariables.restaurantId}`, undefined, true, \n    {\n        statusCode : 200,\n        expectedValues: [\n                            {path: 'message', value: \"Restaurant removed\"}   \n                        ]\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 200",
+                "estack": "AssertionError: Actual is 403, but expected was 200\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:56:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:30:9)",
+                "diff": "- 403\n+ 200\n"
+              },
+              "uuid": "0882d826-16dc-406e-80b6-3feca05522be",
+              "parentUUID": "cb417847-c1d5-4979-a2f4-8e5e3adb5629",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Get a deleted restaurant",
+              "fullTitle": "CRUD restaurant Get a deleted restaurant",
+              "timedOut": false,
+              "duration": 168,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"GET /restaurants/undefined\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:19 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "await request(this, 'GET', `/restaurants/${global.executionVariables.restaurantId}`, undefined, true, \n    {\n        statusCode : 404,\n        expectedValues: [\n                            {path: 'message', value: 'Cannot find restaurant'}\n                        ]\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 404",
+                "estack": "AssertionError: Actual is 403, but expected was 404\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:32:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:95:9)",
+                "diff": "- 403\n+ 404\n"
+              },
+              "uuid": "bee58bb4-198b-45d0-a4da-81150c36ff75",
+              "parentUUID": "cb417847-c1d5-4979-a2f4-8e5e3adb5629",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "9b72fe51-c88e-42a4-8191-552a6af79729",
+            "e5db01bf-633a-436e-b309-9dadeb53fda7",
+            "1fe6b752-b387-48c5-94b4-97c2f9f7aaa9",
+            "0882d826-16dc-406e-80b6-3feca05522be",
+            "bee58bb4-198b-45d0-a4da-81150c36ff75"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 769,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "594bc252-9ad6-4780-b58e-be3ecd00539c",
+          "title": "Negative - Deleting an already deleted restaurant",
+          "fullFile": "/Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/scenarios/restaurant/restaurant.js",
+          "file": "/tests/scenarios/restaurant/restaurant.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create a new restaurant",
+              "fullTitle": "Negative - Deleting an already deleted restaurant Create a new restaurant",
+              "timedOut": false,
+              "duration": 172,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"savory morwong 1763133319953\",\n      \"description\": \"Grilled rabbit kebabs, marinated in Bulgarian spices and served with a fresh capers and pineapple salad.\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:19 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "const requestBody = body || await getCreateRestaurantRequestBody()\n    \nawait request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 201,\n        expectedValues: [\n                            {path: 'name', value: requestBody.name},\n                            {path: 'description', value: requestBody.description}\n                        ],\n        executionVariables: [\n                            {path: '_id', name: 'restaurantId'},\n                            {path: 'name', name: 'restaurantName'},\n                            {path: 'description', name: 'restaurantDescription'},\n                            {path: 'user', name: 'userId'}\n                        ],\n        validateSchema: schemaFile\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 201",
+                "estack": "AssertionError: Actual is 403, but expected was 201\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:10:9)",
+                "diff": "- 403\n+ 201\n"
+              },
+              "uuid": "29f7b770-e3d3-4a07-867c-c64a839e49b6",
+              "parentUUID": "594bc252-9ad6-4780-b58e-be3ecd00539c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Delete a restaurant",
+              "fullTitle": "Negative - Deleting an already deleted restaurant Delete a restaurant",
+              "timedOut": false,
+              "duration": 135,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"DELETE /restaurants/undefined\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:19 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "await request(this, 'DELETE', `/restaurants/${global.executionVariables.restaurantId}`, undefined, true, \n    {\n        statusCode : 200,\n        expectedValues: [\n                            {path: 'message', value: \"Restaurant removed\"}   \n                        ]\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 200",
+                "estack": "AssertionError: Actual is 403, but expected was 200\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:56:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:30:9)",
+                "diff": "- 403\n+ 200\n"
+              },
+              "uuid": "78898fc1-bca5-4072-bb31-bf6851fdb7b8",
+              "parentUUID": "594bc252-9ad6-4780-b58e-be3ecd00539c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deleted same restaurant again",
+              "fullTitle": "Negative - Deleting an already deleted restaurant Deleted same restaurant again",
+              "timedOut": false,
+              "duration": 162,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"DELETE /restaurants/undefined\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:19 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "await request(this, 'DELETE', `/restaurants/${global.executionVariables.restaurantId}`, undefined, true, \n    {\n        statusCode : 404,\n        expectedValues: [\n                            {path: 'message', value: 'Cannot find restaurant'}\n                        ]\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 404",
+                "estack": "AssertionError: Actual is 403, but expected was 404\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:56:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:107:9)",
+                "diff": "- 403\n+ 404\n"
+              },
+              "uuid": "e2232740-224a-47a3-b6ca-dd2fb6a0df49",
+              "parentUUID": "594bc252-9ad6-4780-b58e-be3ecd00539c",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "29f7b770-e3d3-4a07-867c-c64a839e49b6",
+            "78898fc1-bca5-4072-bb31-bf6851fdb7b8",
+            "e2232740-224a-47a3-b6ca-dd2fb6a0df49"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 469,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "211ad7b6-a2ae-4109-b084-f1467349370c",
+          "title": "Get All Restaurants",
+          "fullFile": "/Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/scenarios/restaurant/restaurant.js",
+          "file": "/tests/scenarios/restaurant/restaurant.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create a new restaurant",
+              "fullTitle": "Get All Restaurants Create a new restaurant",
+              "timedOut": false,
+              "duration": 171,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"savory morwong 1763133319953\",\n      \"description\": \"Grilled rabbit kebabs, marinated in Bulgarian spices and served with a fresh capers and pineapple salad.\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:19 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "const requestBody = body || await getCreateRestaurantRequestBody()\n    \nawait request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 201,\n        expectedValues: [\n                            {path: 'name', value: requestBody.name},\n                            {path: 'description', value: requestBody.description}\n                        ],\n        executionVariables: [\n                            {path: '_id', name: 'restaurantId'},\n                            {path: 'name', name: 'restaurantName'},\n                            {path: 'description', name: 'restaurantDescription'},\n                            {path: 'user', name: 'userId'}\n                        ],\n        validateSchema: schemaFile\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 201",
+                "estack": "AssertionError: Actual is 403, but expected was 201\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:10:9)",
+                "diff": "- 403\n+ 201\n"
+              },
+              "uuid": "6a702efa-acfd-4a5d-a7d2-c47a0f6ec141",
+              "parentUUID": "211ad7b6-a2ae-4109-b084-f1467349370c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Create a new restaurant",
+              "fullTitle": "Get All Restaurants Create a new restaurant",
+              "timedOut": false,
+              "duration": 141,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"savory morwong 1763133319953\",\n      \"description\": \"Grilled rabbit kebabs, marinated in Bulgarian spices and served with a fresh capers and pineapple salad.\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:20 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "const requestBody = body || await getCreateRestaurantRequestBody()\n    \nawait request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 201,\n        expectedValues: [\n                            {path: 'name', value: requestBody.name},\n                            {path: 'description', value: requestBody.description}\n                        ],\n        executionVariables: [\n                            {path: '_id', name: 'restaurantId'},\n                            {path: 'name', name: 'restaurantName'},\n                            {path: 'description', name: 'restaurantDescription'},\n                            {path: 'user', name: 'userId'}\n                        ],\n        validateSchema: schemaFile\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 201",
+                "estack": "AssertionError: Actual is 403, but expected was 201\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:10:9)",
+                "diff": "- 403\n+ 201\n"
+              },
+              "uuid": "d060047e-544c-4c44-ac68-bbe6123d5750",
+              "parentUUID": "211ad7b6-a2ae-4109-b084-f1467349370c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Get a restaurants",
+              "fullTitle": "Get All Restaurants Get a restaurants",
+              "timedOut": false,
+              "duration": 132,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"GET /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:20 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "await request(this, 'GET', `/restaurants`, undefined, true, \n    {\n        statusCode : 200,\n        expectedValuesInArrayOfObjects: {\n            key: '_id',\n            value: global.executionVariables.restaurantId,\n            fields:  [\n                        {path: 'name', value: global.executionVariables.restaurantName}\n                     ]\n        }\n    })",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 200",
+                "estack": "AssertionError: Actual is 403, but expected was 200\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:32:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:79:9)",
+                "diff": "- 403\n+ 200\n"
+              },
+              "uuid": "fa085f53-9fdf-44fd-8b76-c113a834437e",
+              "parentUUID": "211ad7b6-a2ae-4109-b084-f1467349370c",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "6a702efa-acfd-4a5d-a7d2-c47a0f6ec141",
+            "d060047e-544c-4c44-ac68-bbe6123d5750",
+            "fa085f53-9fdf-44fd-8b76-c113a834437e"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 444,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "51a783a2-d020-4067-a4d0-1ce80902aa75",
+          "title": "Negative - create restaurants from json",
+          "fullFile": "/Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/scenarios/restaurant/restaurant.js",
+          "file": "/tests/scenarios/restaurant/restaurant.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Negative - Create restaurant without description",
+              "fullTitle": "Negative - create restaurants from json Negative - Create restaurant without description",
+              "timedOut": false,
+              "duration": 147,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"Test name from my json file\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:20 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "await request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 400,\n        expectedValues: [\n                            {path: 'message', value: messageValue},\n                        ]\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 400",
+                "estack": "AssertionError: Actual is 403, but expected was 400\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:121:9)",
+                "diff": "- 403\n+ 400\n"
+              },
+              "uuid": "ef50493c-02a0-4d64-840c-9a373f311ea8",
+              "parentUUID": "51a783a2-d020-4067-a4d0-1ce80902aa75",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Negative - Create restaurant without name",
+              "fullTitle": "Negative - create restaurants from json Negative - Create restaurant without name",
+              "timedOut": false,
+              "duration": 153,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"description\": \"Random description\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:20 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "await request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 400,\n        expectedValues: [\n                            {path: 'message', value: messageValue},\n                        ]\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 400",
+                "estack": "AssertionError: Actual is 403, but expected was 400\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:121:9)",
+                "diff": "- 403\n+ 400\n"
+              },
+              "uuid": "b8d8c868-8346-468f-9d7d-db55b0973a81",
+              "parentUUID": "51a783a2-d020-4067-a4d0-1ce80902aa75",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "ef50493c-02a0-4d64-840c-9a373f311ea8",
+            "b8d8c868-8346-468f-9d7d-db55b0973a81"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 300,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "2cac9bf3-b19a-449f-b757-dbfa85c2cd49",
+          "title": "Create restaurant with CSV data",
+          "fullFile": "/Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/scenarios/restaurant/restaurant.js",
+          "file": "/tests/scenarios/restaurant/restaurant.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create a new restaurant",
+              "fullTitle": "Create restaurant with CSV data Create a new restaurant",
+              "timedOut": false,
+              "duration": 149,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"abc\",\n      \"description\": \"some description\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:20 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "const requestBody = body || await getCreateRestaurantRequestBody()\n    \nawait request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 201,\n        expectedValues: [\n                            {path: 'name', value: requestBody.name},\n                            {path: 'description', value: requestBody.description}\n                        ],\n        executionVariables: [\n                            {path: '_id', name: 'restaurantId'},\n                            {path: 'name', name: 'restaurantName'},\n                            {path: 'description', name: 'restaurantDescription'},\n                            {path: 'user', name: 'userId'}\n                        ],\n        validateSchema: schemaFile\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 201",
+                "estack": "AssertionError: Actual is 403, but expected was 201\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:10:9)",
+                "diff": "- 403\n+ 201\n"
+              },
+              "uuid": "be214f61-2f6a-480c-a97c-a7f85ee2b46b",
+              "parentUUID": "2cac9bf3-b19a-449f-b757-dbfa85c2cd49",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "be214f61-2f6a-480c-a97c-a7f85ee2b46b"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 149,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "96b0c781-e1a1-49f3-8ffe-623564f77da2",
+          "title": "Create restaurant with CSV data",
+          "fullFile": "/Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/scenarios/restaurant/restaurant.js",
+          "file": "/tests/scenarios/restaurant/restaurant.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create a new restaurant",
+              "fullTitle": "Create restaurant with CSV data Create a new restaurant",
+              "timedOut": false,
+              "duration": 162,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"abcabcabcabcabcabcabcabcabc\",\n      \"description\": \" another description\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:20 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "const requestBody = body || await getCreateRestaurantRequestBody()\n    \nawait request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 201,\n        expectedValues: [\n                            {path: 'name', value: requestBody.name},\n                            {path: 'description', value: requestBody.description}\n                        ],\n        executionVariables: [\n                            {path: '_id', name: 'restaurantId'},\n                            {path: 'name', name: 'restaurantName'},\n                            {path: 'description', name: 'restaurantDescription'},\n                            {path: 'user', name: 'userId'}\n                        ],\n        validateSchema: schemaFile\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 201",
+                "estack": "AssertionError: Actual is 403, but expected was 201\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:10:9)",
+                "diff": "- 403\n+ 201\n"
+              },
+              "uuid": "41f9164b-e319-4c1f-bbd3-2c519cda4026",
+              "parentUUID": "96b0c781-e1a1-49f3-8ffe-623564f77da2",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "41f9164b-e319-4c1f-bbd3-2c519cda4026"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 162,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "d34c5e56-0678-4d1c-9fc5-88660ef9ed0f",
+          "title": "Create restaurant with CSV data",
+          "fullFile": "/Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/scenarios/restaurant/restaurant.js",
+          "file": "/tests/scenarios/restaurant/restaurant.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create a new restaurant",
+              "fullTitle": "Create restaurant with CSV data Create a new restaurant",
+              "timedOut": false,
+              "duration": 136,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"restorant123\",\n      \"description\": \" description 3\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:21 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "const requestBody = body || await getCreateRestaurantRequestBody()\n    \nawait request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 201,\n        expectedValues: [\n                            {path: 'name', value: requestBody.name},\n                            {path: 'description', value: requestBody.description}\n                        ],\n        executionVariables: [\n                            {path: '_id', name: 'restaurantId'},\n                            {path: 'name', name: 'restaurantName'},\n                            {path: 'description', name: 'restaurantDescription'},\n                            {path: 'user', name: 'userId'}\n                        ],\n        validateSchema: schemaFile\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 201",
+                "estack": "AssertionError: Actual is 403, but expected was 201\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:10:9)",
+                "diff": "- 403\n+ 201\n"
+              },
+              "uuid": "377474df-4f0d-4030-a026-8ac8808474eb",
+              "parentUUID": "d34c5e56-0678-4d1c-9fc5-88660ef9ed0f",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "377474df-4f0d-4030-a026-8ac8808474eb"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 136,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "264cab26-2dc8-4fe4-9caf-8277fc2be093",
+          "title": "Create restaurant with CSV data",
+          "fullFile": "/Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/scenarios/restaurant/restaurant.js",
+          "file": "/tests/scenarios/restaurant/restaurant.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Create a new restaurant",
+              "fullTitle": "Create restaurant with CSV data Create a new restaurant",
+              "timedOut": false,
+              "duration": 169,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"POST /restaurants\",\n  {\n    \"title\": \"REQUEST HEADERS\",\n    \"value\": {\n      \"Content-Type\": \"application/json\",\n      \"Accept\": \"application/json\",\n      \"x-api-key\": \"759f583a-0cc8-4095-a0e5-7e579bb8012412541c\",\n      \"Authorization\": \"Bearer undefined\"\n    }\n  },\n  {\n    \"title\": \"REQUEST BODY\",\n    \"value\": {\n      \"name\": \"Restaurant!#\",\n      \"description\": \" some other random description\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE HEADERS\",\n    \"value\": {\n      \"server\": \"nginx/1.29.1\",\n      \"date\": \"Fri, 14 Nov 2025 15:15:21 GMT\",\n      \"content-type\": \"text/html; charset=utf-8\",\n      \"content-length\": \"26\",\n      \"connection\": \"close\",\n      \"x-powered-by\": \"Express\",\n      \"etag\": \"W/\\\"1a-4gpSxYeaW1US42l8NpxNzMZmUGk\\\"\",\n      \"x-frame-options\": \"SAMEORIGIN\",\n      \"x-content-type-options\": \"nosniff\"\n    }\n  },\n  {\n    \"title\": \"RESPONSE BODY\",\n    \"value\": {}\n  }\n]",
+              "code": "const requestBody = body || await getCreateRestaurantRequestBody()\n    \nawait request(this, 'POST', '/restaurants', requestBody, true, \n    {\n        statusCode : 201,\n        expectedValues: [\n                            {path: 'name', value: requestBody.name},\n                            {path: 'description', value: requestBody.description}\n                        ],\n        executionVariables: [\n                            {path: '_id', name: 'restaurantId'},\n                            {path: 'name', name: 'restaurantName'},\n                            {path: 'description', name: 'restaurantDescription'},\n                            {path: 'user', name: 'userId'}\n                        ],\n        validateSchema: schemaFile\n})",
+              "err": {
+                "message": "AssertionError: Actual is 403, but expected was 201",
+                "estack": "AssertionError: Actual is 403, but expected was 201\n    at validateStatusCode (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:84:16)\n    at performValidations (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:223:11)\n    at request (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/utils/requests.js:40:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Context.<anonymous> (file:///Users/mairisnikiforovs/Documents/TDLSCHOOL/INTERMEDIATE/REST_API_INTERMEDIATE_BASE-main/tests/steps/restaurant/restaurant.js:10:9)",
+                "diff": "- 403\n+ 201\n"
+              },
+              "uuid": "652bab09-f24e-45d7-b3da-da4a95f45d51",
+              "parentUUID": "264cab26-2dc8-4fe4-9caf-8277fc2be093",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "652bab09-f24e-45d7-b3da-da4a95f45d51"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 169,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        }
+      ],
+      "passes": [
+        "48272377-5c37-46cf-9cb0-649a170a9c14"
+      ],
+      "failures": [
+        "f707cd20-02f8-4d84-8f81-e91695b9627c",
+        "36525085-274f-44d5-895b-cd1250041c8a"
+      ],
+      "pending": [],
+      "skipped": [],
+      "duration": 376,
+      "root": true,
+      "rootEmpty": false,
+      "_timeout": 20000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.8.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "restaurant_report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "reports",
+        "reportFilename": "restaurant_report",
+        "reportTitle": "Restaurant tests"
+      },
+      "version": "6.2.0"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+[
+    {
+        "requestBody": {
+            "name": "Test name from my json file"
+        },
+        "testCaseName": "Negative - Create restaurant without description",
+        "message": "Restaurant validation failed: description: Path `description` is required."
+    },
+    {
+        "requestBody": {
+            "description": "Random description"
+        },
+        "testCaseName": "Negative - Create restaurant without name",
+        "message": "Restaurant validation failed: name: Path `name` is required."
+    }
+]
